@@ -1,0 +1,47 @@
+DIRECTORY:
+  train: ../Dataset/New_Train/
+  val: ../Dataset/New_val/
+LOGGER:
+  debug: false
+  plot:
+  - loss
+  - elapsed_time
+  - acc
+  - lr
+  wandb: True
+  logging_interval: 100
+
+OPT:
+  opt: adamw
+  momentum: 0.9
+  lr: 0.001
+  weight_decay: 0.05
+
+SCH:
+  warmup_epochs: 5 # warm up
+  sched: cosine
+  decay_rate: 0.05,
+  num_epochs: 100,
+  cycle_limit: 2
+TRAINER:
+  seed: 1010
+  model: f-vit-sa-24 #vit
+  loss: Focal # CrossEntropyLoss
+  metric:
+  - accuracy
+  n_epochs: 100
+  amp: false
+  early_stopping_target: val_loss
+  early_stopping_patience: 5
+  early_stopping_mode: max
+
+DATASET:
+  val_size: 0.1
+  img_size: 256
+
+DATALOADER:
+  batch_size: 1
+  num_workers: 4
+  shuffle: true
+  pin_memory: true
+  drop_last: false
